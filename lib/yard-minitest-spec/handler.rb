@@ -1,37 +1,58 @@
 
 class YardMiniTestSpecDescribeHandler < YARD::Handlers::Ruby::Base
-  VERSION = YardMiniTestSpec::VERSION
   handles method_call(:describe)
   
   def process
-    objname = statement.parameters.first.jump(:string_content).source
-    if statement.parameters[1]
-      src = statement.parameters[1].jump(:string_content).source
-      objname += (src[0] == "#" ? "" : "::") + src
-    end
-    obj = {:spec => owner ? (owner[:spec] || "") : ""}
-    obj[:spec] += objname
-    parse_block(statement.last.last, owner: obj)
+    meth = statement.method_name(true).to_s
+    mod = register ModuleObject.new(namespace, 'spec')
+
+    name = statement.parameters.first.jump(:string_content).source
+    (mod[:bob] ||= []).push name
+    parse_block(statement.last.last, owner: mod)
+    mod[:bob].pop
   rescue YARD::Handlers::NamespaceMissingError
   end
 end
 
 class YardMiniTestSpecItHandler < YARD::Handlers::Ruby::Base
-  VERSION = YardMiniTestSpec::VERSION
   handles method_call(:it)
   
   def process
-    return if owner.nil?
-    obj = P(owner[:spec])
-    return if obj.is_a?(Proxy)
-    # ignore comments etc
-    if statement.last.last.source.chomp.size > 0
-      (obj[:specifications] ||= []) << {
-        name: statement.parameters.first.jump(:string_content).source,
-        file: statement.file,
-        line: statement.line,
-        source: statement.last.last.source.chomp
-      }
+    array = owner[:bob].dup
+
+    if array.size > 1
+      last = array.pop
+      start = array.join('::')
+      if last.match(/\A[A-Z]/)
+        name = start + '::' + last
+      else
+        name = start + last
+      end
+    else
+      name = array[0]
+    end
+
+    if name.match(/:[a-z]([^:]*)/)
+      name.gsub!(/:([a-z][^:]*)/, '.\1')
+    end
+    if obj = YARD::Registry.resolve(namespace, name)
+      # ignore :it with empty body
+      if statement.last.last.source.chomp.size > 0
+        (obj[:specifications] ||= []) << {
+          name: statement.parameters.first.jump(:string_content).source,
+          file: statement.file,
+          line: statement.line,
+          source: statement.last.last.source.chomp
+        }
+      end
+    else
+      if namespace.root?
+        text = "Nothing to describe for #{name}"
+      else
+        text = "Nothing to describe for #{name} in (#{namespace})"
+      end
+      log.warn text unless namespace[:duplicate] and namespace[:duplicate][name]
+      ( namespace[:duplicate] ||= {} )[name] = true 
     end
   end
 end

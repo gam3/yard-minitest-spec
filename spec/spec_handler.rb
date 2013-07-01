@@ -3,9 +3,14 @@ require 'minitest/spec'
 require 'minitest/autorun'
 
 # @!visibility private
-# @private
 class YARD
   # @!visibility private
+  class Templates
+  end
+  class CodeObjects
+    class Base
+    end
+  end
   class Handlers
     # @!visibility private
     class Ruby
@@ -28,16 +33,21 @@ class YARD
         # @!visibility private
         class Proxy
         end
-        def self.handles(x)
+        # @!visibility private
+        def self.handles(*x)
         end
+        # @!visibility private
         def self.method_call(x)
         end
+        # @!visibility private
         def owner
           $owner
         end
+        # @!visibility private
         def P(x)
           x
         end
+        # @!visibility private
         def statement
           Node.new
         end
@@ -46,7 +56,7 @@ class YARD
   end
 end
 
-require 'yard-minitest-spec'
+#require 'yard-minitest-spec'
 require 'yard-minitest-spec/handler'
 
 $owner = nil
@@ -73,3 +83,20 @@ describe YardMiniTestSpecItHandler do
   end
 end
 
+class YardMiniTestSpecItHandler
+  describe '#process' do
+    it 'must return a Nil' do
+      @yard = YardMiniTestSpecItHandler.new
+      @yard.process.must_equal nil
+    end
+  end
+end
+
+class YardMiniTestSpecDescribeHandler
+  describe '#process' do
+    it 'must return a Nil' do
+      @yard = YardMiniTestSpecItHandler.new
+      @yard.process.must_equal nil
+    end
+  end
+end
