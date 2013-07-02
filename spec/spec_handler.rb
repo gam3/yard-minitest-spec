@@ -1,10 +1,19 @@
 
+require 'minitest/mock'
 require 'minitest/spec'
 require 'minitest/autorun'
 
 # @!visibility private
 class YARD
   # @!visibility private
+  class Registry
+    def self.resolve(namespace, name)
+      mock = MiniTest::Mock.new
+      mock.expect(:[], mock, [nil])
+      mock.expect(:<<, mock, [nil])
+      mock
+    end
+  end
   class Templates
   end
   class CodeObjects
@@ -43,13 +52,26 @@ class YARD
         def owner
           $owner
         end
+        def namespace
+          'bob'
+        end
         # @!visibility private
         def P(x)
           x
         end
         # @!visibility private
         def statement
-          Node.new
+          mock = MiniTest::Mock.new
+          mock.expect(:last, mock, [])
+          mock.expect(:source, mock, [])
+          mock.expect(:chomp, mock, [])
+          mock.expect(:size, mock, [])
+          mock.expect(:>, mock, [nil])
+          mock.expect(:parameters, mock, [])
+          mock.expect(:first, mock, [])
+          mock.expect(:jump, mock, [nil])
+          mock.expect(:file, mock, [])
+          mock.expect(:line, mock, [])
         end
       end
     end
@@ -59,7 +81,7 @@ end
 #require 'yard-minitest-spec'
 require 'yard-minitest-spec/handler'
 
-$owner = nil
+$owner = {}
 
 describe YardMiniTestSpecDescribeHandler do
   before do
@@ -82,6 +104,8 @@ describe YardMiniTestSpecItHandler do
     end
   end
 end
+
+$owner = { :bob => [ 'A', 'B', 'C', '#d' ] }
 
 class YardMiniTestSpecItHandler
   describe '#process' do

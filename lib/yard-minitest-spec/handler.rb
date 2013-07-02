@@ -10,6 +10,7 @@ class YardMiniTestSpecDescribeHandler < YARD::Handlers::Ruby::Base
     (mod[:bob] ||= []).push name
     parse_block(statement.last.last, owner: mod)
     mod[:bob].pop
+    nil
   rescue YARD::Handlers::NamespaceMissingError
   end
 end
@@ -20,6 +21,7 @@ class YardMiniTestSpecItHandler < YARD::Handlers::Ruby::Base
   def process
     array = owner[:bob].dup
 
+    return nil unless array
     if array.size > 1
       last = array.pop
       start = array.join('::')
@@ -54,5 +56,6 @@ class YardMiniTestSpecItHandler < YARD::Handlers::Ruby::Base
       log.warn text unless namespace[:duplicate] and namespace[:duplicate][name]
       ( namespace[:duplicate] ||= {} )[name] = true 
     end
+    nil
   end
 end
