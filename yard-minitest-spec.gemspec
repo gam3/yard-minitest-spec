@@ -7,7 +7,7 @@ require 'yard-minitest-spec'
 
 Gem::Specification.new do |s|
   s.name = "yard-minitest-spec"
-  s.version = '0.1.4'
+  s.version = '0.1.5'
 
   s.summary = "YARD plugin to list MiniTest::Spec specifications inside documentation"
   s.description = %q{
@@ -23,8 +23,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubyforge_project = "yard-minitest-spec"
   s.rubygems_version = "1.8.11"
-  s.files = Dir['ChangeLog']
-  s.files = Dir['lib/*/*.rb'] + Dir['lib/*.rb']
+  s.files = 'ChangeLog'
+  s.files += Dir['lib/*/*.rb'] + Dir['lib/*.rb']
   s.files += Dir['*.gemspec']
   s.files += Dir['examples/*'] 
   s.files += Find.find('templates').select{ |f| f if FileTest.file?(f) }

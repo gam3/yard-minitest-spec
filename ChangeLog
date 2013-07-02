@@ -1,5 +1,7 @@
 2013-07-01  G. Allen Morris III  <gam3@gam3.net>
 
 * Use namespace when looking for :describe
-# Add logging for undefined methods
+* Add logging for undefined methods
+* Added ChangeLog file
+* Signed gem file with pgp key
 
