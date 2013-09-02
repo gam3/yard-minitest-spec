@@ -53,7 +53,7 @@ class YARD
           $owner
         end
         def namespace
-          'bob'
+          'mtsdh'
         end
         # @!visibility private
         def P(x)
@@ -105,7 +105,7 @@ describe YardMiniTestSpecItHandler do
   end
 end
 
-$owner = { :bob => [ 'A', 'B', 'C', '#d' ] }
+$owner = { :mtsdh => [ 'A', 'B', 'C', '#d' ] }
 
 class YardMiniTestSpecItHandler
   describe '#process' do

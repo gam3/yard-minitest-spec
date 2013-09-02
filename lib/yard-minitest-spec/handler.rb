@@ -4,12 +4,11 @@ class YardMiniTestSpecDescribeHandler < YARD::Handlers::Ruby::Base
   
   def process
     meth = statement.method_name(true).to_s
-    mod = register ModuleObject.new(namespace, 'spec')
 
     name = statement.parameters.first.jump(:string_content).source
-    (mod[:bob] ||= []).push name
-    parse_block(statement.last.last, owner: mod)
-    mod[:bob].pop
+    (namespace[:mtsdh] ||= []).push name
+    parse_block(statement.last.last, owner: namespace)
+    namespace[:mtsdh].pop
     nil
   rescue YARD::Handlers::NamespaceMissingError
   end
@@ -19,7 +18,7 @@ class YardMiniTestSpecItHandler < YARD::Handlers::Ruby::Base
   handles method_call(:it)
   
   def process
-    array = owner[:bob].dup
+    array = owner[:mtsdh].dup
 
     return nil unless array
     if array.size > 1
