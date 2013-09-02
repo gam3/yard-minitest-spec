@@ -7,7 +7,7 @@ require 'yard-minitest-spec'
 
 Gem::Specification.new do |s|
   s.name = "yard-minitest-spec"
-  s.version = '0.1.5'
+  s.version = '0.1.6'
 
   s.summary = "YARD plugin to list MiniTest::Spec specifications inside documentation"
   s.description = %q{

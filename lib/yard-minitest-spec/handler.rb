@@ -1,7 +1,9 @@
 
+# This class handles define statements
 class YardMiniTestSpecDescribeHandler < YARD::Handlers::Ruby::Base
   handles method_call(:describe)
   
+  # process the define statement
   def process
     meth = statement.method_name(true).to_s
 
@@ -10,13 +12,15 @@ class YardMiniTestSpecDescribeHandler < YARD::Handlers::Ruby::Base
     parse_block(statement.last.last, owner: namespace)
     namespace[:mtsdh].pop
     nil
-  rescue YARD::Handlers::NamespaceMissingError
+  rescue YARD::Handlers::Ruby::NamespaceMissingError
   end
 end
 
+# This class handles it statements
 class YardMiniTestSpecItHandler < YARD::Handlers::Ruby::Base
   handles method_call(:it)
   
+  # process the it statement
   def process
     array = owner[:mtsdh].dup
 

@@ -7,6 +7,7 @@ require 'minitest/autorun'
 class YARD
   # @!visibility private
   class Registry
+    # @!visibility private
     def self.resolve(namespace, name)
       mock = MiniTest::Mock.new
       mock.expect(:[], mock, [nil])
@@ -14,13 +15,18 @@ class YARD
       mock
     end
   end
+  # @!visibility private
   class Templates
   end
+  # @!visibility private
   class CodeObjects
+    # @!visibility private
     class Base
     end
   end
+  # @!visibility private
   class Handlers
+    # @!visibility private
     # @!visibility private
     class Ruby
       # @!visibility private
@@ -28,11 +34,14 @@ class YARD
       end
       # @!visibility private
       class Node
+        # @!visibility private
         def source
           'text'
         end
+        # @!visibility private
         def parameters
         end
+        # @!visibility private
         def last
           Node.new
         end
@@ -52,6 +61,7 @@ class YARD
         def owner
           $owner
         end
+        # @!visibility private
         def namespace
           'mtsdh'
         end
@@ -78,7 +88,6 @@ class YARD
   end
 end
 
-#require 'yard-minitest-spec'
 require 'yard-minitest-spec/handler'
 
 $owner = {}
@@ -88,7 +97,7 @@ describe YardMiniTestSpecDescribeHandler do
     @yard = YardMiniTestSpecItHandler.new
   end
   describe '#process' do
-    it 'must return a String' do
+    it 'must return NilClass' do
       @yard.process.must_be_instance_of NilClass
     end
   end
@@ -99,7 +108,7 @@ describe YardMiniTestSpecItHandler do
     @yard = YardMiniTestSpecItHandler.new
   end
   describe '#process' do
-    it 'must return a String' do
+    it 'must return a NilClass' do
       @yard.process.must_be_instance_of NilClass
     end
   end
@@ -109,7 +118,7 @@ $owner = { :mtsdh => [ 'A', 'B', 'C', '#d' ] }
 
 class YardMiniTestSpecItHandler
   describe '#process' do
-    it 'must return a Nil' do
+    it 'must return a nil' do
       @yard = YardMiniTestSpecItHandler.new
       @yard.process.must_equal nil
     end
@@ -118,7 +127,7 @@ end
 
 class YardMiniTestSpecDescribeHandler
   describe '#process' do
-    it 'must return a Nil' do
+    it 'must return a nil' do
       @yard = YardMiniTestSpecItHandler.new
       @yard.process.must_equal nil
     end
