@@ -17,3 +17,8 @@ YARD::Rake::YardocTask.new do |t|
 end if YARD
 
 task :spec => :test
+
+desc "Builds the gem"
+task :gem do
+  Gem::Builder.new(eval(File.read('yard-minitest-spec.gemspec'))).build
+end
