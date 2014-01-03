@@ -7,7 +7,7 @@ require 'yard-minitest-spec'
 
 Gem::Specification.new do |s|
   s.name = "yard-minitest-spec"
-  s.version = '0.1.6'
+  s.version = '0.1.7'
 
   s.summary = "YARD plugin to list MiniTest::Spec specifications inside documentation"
   s.description = %q{
@@ -17,9 +17,9 @@ Gem::Specification.new do |s|
   }
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["G. Allen Morris III"]
-  s.date = "2013-07-01"
+  s.date = "2014-01-03"
   s.email = "gam3@gam3.net"
-  s.homepage = "http://yardoc.org"
+  s.homepage = "https://github.com/gam3/yard-minitest-spec"
   s.require_paths = ["lib"]
   s.rubyforge_project = "yard-minitest-spec"
   s.rubygems_version = "1.8.11"
